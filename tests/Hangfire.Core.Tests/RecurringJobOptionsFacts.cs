@@ -33,13 +33,6 @@ namespace Hangfire.Core.Tests
         }
 
         [Fact]
-        public void DisableConcurrentExecution_ShouldHaveDefaultValueOfFalse()
-        {
-            var options = new RecurringJobOptions();
-            Assert.Equal(options.DisableConcurrentExecution,false);
-        }
-
-        [Fact]
         public void SetQueueName_ThrowsAnException_WhenQueueNameHasInvalidFormat()
         {
             var options = new RecurringJobOptions();

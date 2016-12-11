@@ -27,10 +27,19 @@ namespace Hangfire
             [NotNull] this IRecurringJobManager manager,
             [NotNull] string recurringJobId,
             [NotNull] Job job,
-            [NotNull] string cronExpression,
-            bool disableConcurrentExecution = false)
+            [NotNull] string cronExpression)
         {
-            AddOrUpdate(manager, recurringJobId, job, cronExpression, TimeZoneInfo.Utc,disableConcurrentExecution);
+            AddOrUpdate(manager, recurringJobId, job, cronExpression, TimeZoneInfo.Utc);
+        }
+
+        public static void AddOrUpdate(
+            [NotNull] this IRecurringJobManager manager,
+            [NotNull] string recurringJobId,
+            [NotNull] Job job,
+            [NotNull] string cronExpression,
+            [NotNull] TimeZoneInfo timeZone)
+        {
+            AddOrUpdate(manager, recurringJobId, job, cronExpression, timeZone, EnqueuedState.DefaultQueue);
         }
 
         public static void AddOrUpdate(
@@ -39,19 +48,7 @@ namespace Hangfire
             [NotNull] Job job,
             [NotNull] string cronExpression,
             [NotNull] TimeZoneInfo timeZone,
-            bool disableConcurrentExecution = false)
-        {
-            AddOrUpdate(manager, recurringJobId, job, cronExpression, timeZone, EnqueuedState.DefaultQueue, disableConcurrentExecution);
-        }
-
-        public static void AddOrUpdate(
-            [NotNull] this IRecurringJobManager manager,
-            [NotNull] string recurringJobId,
-            [NotNull] Job job,
-            [NotNull] string cronExpression,
-            [NotNull] TimeZoneInfo timeZone,
-            [NotNull] string queue,
-            bool disableConcurrentExecution = false)
+            [NotNull] string queue)
         {
             if (manager == null) throw new ArgumentNullException(nameof(manager));
             if (timeZone == null) throw new ArgumentNullException(nameof(timeZone));
@@ -61,7 +58,7 @@ namespace Hangfire
                 recurringJobId,
                 job,
                 cronExpression,
-                new RecurringJobOptions { QueueName = queue, TimeZone = timeZone,DisableConcurrentExecution = disableConcurrentExecution });
+                new RecurringJobOptions { QueueName = queue, TimeZone = timeZone });
         }
     }
 }

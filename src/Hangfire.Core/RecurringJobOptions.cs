@@ -29,7 +29,6 @@ namespace Hangfire
         {
             TimeZone = TimeZoneInfo.Utc;
             QueueName = EnqueuedState.DefaultQueue;
-            DisableConcurrentExecution = false;
         }
 
         [NotNull]
@@ -54,7 +53,5 @@ namespace Hangfire
                 _queueName = value;
             }
         }
-
-        public bool DisableConcurrentExecution { get; set; }
     }
 }
